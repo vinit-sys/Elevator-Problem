@@ -19,3 +19,10 @@ from django.urls import path
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
+# in my_project/urls.py
+
+from django.urls import include, path
+
+urlpatterns += [
+    path('elevator-system/', include('ElevatorApp.urls')),
+]
