@@ -124,6 +124,7 @@ def elevatorStatus(request, elevator_id):
         # Get the elevator object with the given id from the database
         elevator = Elevator.objects.get(id=elevator_id)
     except Exception as exc:
+        logger.error("Error while ge elevator:%s"%str(exc))
         return JsonResponse({"message": "Elevator doesn't exist"},status=status.NOT_FOUND)
     # Return a status with the list of destinations for the elevator
     return JsonResponse({"message": elevator.status},status=status.OK)
@@ -140,6 +141,7 @@ def updateDoorStatus(request,elevator_id):
             elevator.door = door_status
             elevator.save()
         except Exception as exc:
+            logger.error("Error while ge elevator:%s"%str(exc))
             return JsonResponse({"message": "Elevator doesn't exist"},status=status.NOT_FOUND)
         # Return a message with the list of destinations for the elevator
         return JsonResponse({"message": door_status},status=status.OK)
