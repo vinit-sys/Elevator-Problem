@@ -64,6 +64,7 @@ class Elevator(models.Model):
         )  # Remove the destination from the list of destinations
         self.status = "stop"  # Set the status of the elevator to "stopped"
         self.save()
+        return {"current_floor":str(self.current_floor),"elevator_id":str(self.id)}
 
     # Define a method to add a floor to the list of destinations
     def add_destination(self, floor):

@@ -12,7 +12,7 @@ urlpatterns = [
     # URL for getting the floor number to reach for a specific elevator
     path(
         "<int:elevator_id>/floor/<int:requested_floor>/",
-        views.getFloorNumberToReach,
+        views.putFloorNumberToReach,
     ),
     # URL for assigning an elevator to a requested floor
     path("assign-elevator/<int:requested_floor>/", views.assignElevator),
