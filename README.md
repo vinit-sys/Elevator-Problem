@@ -27,7 +27,7 @@ HTTP Status Codes:
 Retrieves all destinations for an elevator.
 
 Endpoint:
-> https://vinitprojects.pythonanywhere.com/elevator-system/13/requests/
+> https://vinitprojects.pythonanywhere.com/elevator-system/<int:elevator_id>/requests/
 ```
 Method: GET
 Request format: None
@@ -44,7 +44,7 @@ HTTP Status Codes:
 Retrieves the next destination floor number for an elevator.
 
 Endpoint:
-> https://vinitprojects.pythonanywhere.com/elevator-system/6/next-floor/
+> https://vinitprojects.pythonanywhere.com/elevator-system/<int:elevator_id>/next-floor/
 ```
 Method: GET
 Request format: None
@@ -60,7 +60,7 @@ HTTP Status Codes:
 Retrieves the current direction of an elevator.
 
 Endpoint:
-> https://vinitprojects.pythonanywhere.com/elevator-system/6/direction/
+> https://vinitprojects.pythonanywhere.com/elevator-system/<int:elevator_id>/direction/
 ```
 Method: GET
 Request format: None
@@ -76,7 +76,7 @@ HTTP Status Codes:
 Adds a new destination floor number for an elevator.
 
 Endpoint:
-> https://vinitprojects.pythonanywhere.com/elevator-system/10/floor/4/
+> https://vinitprojects.pythonanywhere.com/elevator-system/<int:elevator_id>/floor/<int:floor_number>/
 ```
 Method: GET
 Request format: application/json
@@ -94,7 +94,7 @@ HTTP Status Codes:
 Assigns an available elevator to a requested floor.
 
 Endpoint: 
-> https://vinitprojects.pythonanywhere.com/elevator-system/assign-elevator/4/
+> https://vinitprojects.pythonanywhere.com/elevator-system/assign-elevator/<int:floor_number>/
 ```
 Method: POST
 Request format: None
@@ -110,7 +110,7 @@ HTTP Status Codes:
 Retrieves the current status of an elevator.
 
 Endpoint: 
-> https://vinitprojects.pythonanywhere.com/elevator-system/6/status/
+> https://vinitprojects.pythonanywhere.com/elevator-system/<int:elevator_id>/status/
 ```
 Method: GET
 Request format: None
@@ -127,7 +127,7 @@ HTTP Status Codes:
 Update the door status of an elevator.
 
 Endpoint: 
-> https://vinitprojects.pythonanywhere.com/elevator-system/6/door-status/
+> https://vinitprojects.pythonanywhere.com/elevator-system/<int:elevator_id>/door-status/
 ```
 Method: POST
 Request format: application/json
