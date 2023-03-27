@@ -29,9 +29,20 @@ Migrate the database
 ```sh
 python manage.py migrate
 ```
+Create superuser 
+```sh
+python manage.py createsuperuser
+```
 Now run the server
 ```sh
 python manage.py runserver
+```
+Now open django admin panel and add token.
+
+Token is required to access APIs 
+In Headers you should pass
+```
+{"Authorizarion":"Token your_token"}
 ```
 
 
