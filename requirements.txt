@@ -4,3 +4,4 @@ django-environ==0.10.0
 mysqlclient==2.1.1
 psycopg2==2.9.5
 sqlparse==0.4.3
+djangorestframework==3.14.0
