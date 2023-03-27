@@ -1,3 +1,86 @@
+# Elevator-Problem
+## Overview
+This project describes an elevator system with various capabilities, including moving up and down, opening and closing doors, and assigning elevators to different floors. It also lists some assumptions that will guide the development of a Django project to maintain the system. The project will have several API endpoints, allowing for the initialization of the system, fetching requests for a given elevator, saving user requests, and opening/closing doors.
+
+## Installation
+After cloning the project.
+
+First, create virtual environment for the project.In this project I used virtualenv
+```sh
+pip install virtualenv
+```
+Now install the requirements from the file requirements.txt.
+```sh
+pip install -r path/to/requirements.txt
+```
+Now setup .env file inside ElevatorProject folder.(where settings file is located)
+
+inside /.env
+```
+SECRET_KEY='scret_key'
+DATABASE_ENGINE='django.db.backends.postgresql'
+DATABASE_NAME='database_name'
+DATABASE_USER='database_user'
+DATABASE_PASSWORD='database_password'
+DATABASE_HOST='database_host'
+DATABASE_PORT='port_number'
+```
+Migrate the database
+```sh
+python manage.py migrate
+```
+Now run the server
+```sh
+python manage.py runserver
+```
+
+
+
+## Architecture:
+
+- The system will follow the client-server architecture.
+
+- The Elevator controller acts as a server and provides endpoints to communicate with the client.
+
+- The client can be any user interface that sends requests to the elevator controller.
+
+### Elevator Model
+
+The Elevator model will consist of the following fields:
+```
+id: Primary key of the elevator.
+current_floor: Current floor of the elevator.
+destinations: List of destinations the elevator needs to visit.
+direction: The direction the elevator is moving.
+status: The status of the elevator.
+door_status : The status of the door.
+```
+### The Elevator Controller:
+
+1 The Elevator controller will handle requests from the client and interact with the Elevator model.
+
+2 The Elevator controller will perform the following tasks:
+
+- Create the required number of elevators.
+
+- Assign the nearest available elevator to the requested floor.
+
+- Get the list of destinations for the requested elevator.
+
+- Get the next floor for the requested elevator.
+
+- Get the direction of the requested elevator.
+
+- Add the requested floor to the destination list of the requested elevator.
+
+- Update the door status of the requested elevator.
+
+- Get the status of the requested elevator.
+
+3 The Elevator controller will communicate with the Elevator model using the ORM provided by Django.
+
+4 The Elevator controller will respond to the client with JSON formatted data.
+
 ## Elevator-Problem API's
 
 This repository contains API documentation for an elevator system.
