@@ -21,7 +21,7 @@ class ElevatorSystem(ViewSet):
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
     
-    def initalize(self, request):
+    def initialize(self, request):
         num_of_elevators = int(request.POST.get("no_of_elevators"))
         if not num_of_elevators:
             JsonResponse({"message":"no_of_elevators not given"},status=status.BAD_REQUEST)
