@@ -11,16 +11,15 @@ import logging
 from rest_framework.viewsets import ViewSet
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
-
+from .serializers import ElevatorSerializer
 from http import HTTPStatus as status
-
+import json
 logger = logging.getLogger(__name__)
 
 class ElevatorSystem(ViewSet):
     
     authentication_classes=[TokenAuthentication]
     permission_classes=[IsAuthenticated]
-    
     def initialize(self, request):
         num_of_elevators = int(request.POST.get("no_of_elevators"))
         if not num_of_elevators:
@@ -28,11 +27,14 @@ class ElevatorSystem(ViewSet):
         elevators = []
         try:
             for i in range(0,num_of_elevators):
-                elevator = Elevator.objects.create()
+                elevator = Elevator()
                 elevators.append(elevator)
+            elevators_objects = Elevator.objects.bulk_create(elevators)
         except Exception as exc:
             return JsonResponse({"message":"Error occured while creating elevators"},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-        return JsonResponse({"message":str(elevators)},status=status.HTTP_201_CREATED)
+        serialized_elevator = ElevatorSerializer(elevators_objects,many=True)
+        elevators_S = json.loads(json.dumps(serialized_elevator.data))
+        return JsonResponse({"message":elevators_S[0]},status=status.OK)
     
     def get_all_requests(self,request, elevator_id):
         try:
@@ -41,7 +43,9 @@ class ElevatorSystem(ViewSet):
         except Exception as exc:
             return JsonResponse({"message": "Elevator doesn't exist"},status=status.NOT_FOUND)
         # Return a message with the list of destinations for the elevator
-        return JsonResponse({"message": str(elevator.destinations)},status=status.OK)
+        serialized_elevator = ElevatorSerializer(elevator)
+        
+        return JsonResponse({"message": serialized_elevator.data['destinations']},status=status.OK)
 
 
     # Method to get the next floor for a specific elevator
@@ -56,7 +60,9 @@ class ElevatorSystem(ViewSet):
         if not elevator.destinations:
             logger.info("Elevator :%s doesn't have next destionation"%str(elevator))
             return JsonResponse({"message":"-1"},status=status.NO_CONTENT)
-        return JsonResponse({"message": str(elevator.destinations[0])},status=status.OK)
+        serialized_elevator = ElevatorSerializer(elevator)
+        
+        return JsonResponse({"message": serialized_elevator.data['destinations'][0]},status=status.OK)
 
 
     # Method to get the direction of a specific elevator
@@ -68,7 +74,9 @@ class ElevatorSystem(ViewSet):
             logger.error("Error in getting Elevator using elevator_id:%s"%str(exc))
             return JsonResponse({"message": "Elevator doesn't exist"},status=status.NOT_FOUND)
         # Return a message with the direction of the elevator
-        return JsonResponse({"message": elevator.direction},status=status.OK)
+        serialized_elevator = ElevatorSerializer(elevator)
+        
+        return JsonResponse({"message": serialized_elevator.data['direction']},status=status.OK)
 
 
     # Method to put the floor number from the user to reach for a specific elevator
@@ -135,7 +143,9 @@ class ElevatorSystem(ViewSet):
             logger.error("Error while ge elevator:%s"%str(exc))
             return JsonResponse({"message": "Elevator doesn't exist"},status=status.NOT_FOUND)
         # Return a status with the list of destinations for the elevator
-        return JsonResponse({"message": elevator.status},status=status.OK)
+        serialized_elevator = ElevatorSerializer(elevator)
+        
+        return JsonResponse({"message": serialized_elevator.data['status']},status=status.OK)
 
     # Method to get elevator status for the reuqested elevator_id
     def update_door_status(self,request,elevator_id):
@@ -151,5 +161,7 @@ class ElevatorSystem(ViewSet):
             logger.error("Error while ge elevator:%s"%str(exc))
             return JsonResponse({"message": "Elevator doesn't exist"},status=status.NOT_FOUND)
         # Return a message with the list of destinations for the elevator
-        return JsonResponse({"message": door_status},status=status.OK)
+        serialized_elevator = ElevatorSerializer(elevator)
+        
+        return JsonResponse({"message": serialized_elevator.data['door']},status=status.OK)
     
